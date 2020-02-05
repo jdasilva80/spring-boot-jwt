@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	xmlns:sec="http://thymeleaf.org/extras/spring-security">
+<head th:fragment="head">
+<meta charset="UTF-8" />
+<title th:text="'Spring boot + thymeleaf + spring data, '+${titulo}"></title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}">
+</head>
+<body>
+
+	<header th:fragment="header">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="#">Spring boot</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+				<ul class="navbar-nav mr-auto">
+
+					<li class="nav-item active"><a class="nav-link" href="#">Home</a>
+					</li>
+					<li class="nav-item active"><a class="nav-link" href="#about "
+						th:href="@{/listar}">Clientes</a></li>
+				</ul>
+
+				<ul class="navbar-nav navbar-right">
+
+					<li sec:authorize="! isAuthenticated()"
+						class="navbar-nav navbar-right"><a
+						class="btn btn-outline-primary" th:href="@{/login}">Sign In</a></li>
+
+					<li sec:authorize="isAuthenticated()" class="dropdown show"><a
+						class="btn btn-primary dropdown-toggle" type="button"
+						id="dropdownMenuButton" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false"> <span
+							sec:authentication="name"></span>
+					</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+							<form th:action="@{/logout}" method="post">
+								<button class="dropdown-item" type="submit">Sign out</button>
+							</form>
+
+						</div></li>
+				</ul>
+
+				<ul class="navbar-nav navbar-right mx-4">
+
+					<li><a th:href="@{/locale(lang=es_ES)}"
+						class="btn btn-success mx-1">ES</a></li>
+					<li><a th:href="@{/locale(lang=en_EN)}"
+						class="btn btn-success mx-1">EN</a></li>
+
+					<li class="nav-item dropdown show mx-2"><a
+						class="btn btn-primary dropdown-toggle" type="button"
+						id="dropdownLanguage" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false"> <span th:text="#{text.locale.language}"></span>
+					</a>
+
+						<div class="dropdown-menu" aria-labelledby="dropdownLanguage">
+							<a th:href="@{/locale(lang=es_ES)}" class="dropdown-item"
+								th:text="#{text.locale.language.es}">ES</a> <a
+								th:href="@{/locale(lang=en_EN)}" class="dropdown-item"
+								th:text="#{text.locale.language.en}">EN</a>
+						</div></li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="alert alert-success" th:if="${success !=null}"
+			th:text="${success}"></div>
+		<div class="alert alert-danger" th:if="${error !=null}"
+			th:text="${error}"></div>
+		<div class="alert alert-warning" th:if="${warning !=null}"
+			th:text="${warning}"></div>
+		<div class="alert alert-info" th:if="${info !=null}" th:text="${info}"></div>
+
+	</header>
+	<div class="container"></div>
+
+	<footer th:fragment="footer" class="container">
+
+		<img alt="coexistir" th:src="@{/images/springlogo.png}"
+			style="max-width: 25%; max-height: 25%">
+
+		<p sec:authorize="isAuthenticated()">
+			Usuario logueado: <span sec:authentication="name"></span> | roles: <span
+				sec:authentication="principal.authorities"></span>
+		</p>
+
+		<p>Desarrollado por JM Da Silva</p>
+
+		<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+		<script th:src="@{/js/popper.min.js}"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+		<script th:src="@{/js/jquery-ui.min.js}"></script>
+	</footer>
+</body>
+</html>
