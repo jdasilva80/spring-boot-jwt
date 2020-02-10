@@ -75,7 +75,6 @@ public class MvcConfig implements WebMvcConfigurer {
 
 		marshaller.setClassesToBeBound(new Class[] { com.bolsadeideas.springboot.app.view.xml.ClienteList.class });
 
-		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ hola" +marshaller.getContextPath());
 		return marshaller;
 	}
 
